@@ -29,11 +29,20 @@ const calculatorSlice = createSlice({
           state.secondNum,
           state.operator,
         );
+        state.firstNum = state.result;
+        state.secondNum = null;
       }
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     resetState(state) {
-      state = initialState;
+      state.firstNum = null;
+      state.secondNum = null;
+      state.operator = null;
+      state.result = null;
+    },
+    setNumber(state, action: PayloadAction<number>) {
+      !state.operator
+        ? (state.firstNum = action.payload)
+        : (state.secondNum = action.payload);
     },
   },
 });
@@ -66,6 +75,7 @@ export const {
   setOperator,
   calculateResult,
   resetState,
+  setNumber,
 } = calculatorSlice.actions;
 
 export default calculatorSlice.reducer;

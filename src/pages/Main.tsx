@@ -11,17 +11,17 @@ import {
   setFirstNum,
   setOperator,
   setSecondNum,
+  setNumber,
 } from '../features/calculatorSlice';
 import { Operator } from '../model/operator';
 
 export default function Main() {
   const [displayNum, setDisplayNum] = useState('0');
+  const [isNew, setIsNew] = useState(false);
   const dispatch = useDispatch();
   const { operator, secondNum, result } = useSelector(
     (state: RootType) => state.calculator,
   );
-
-  let isNew = true;
 
   const createButtonRange = (min: number, max: number): Array<JSX.Element> => {
     const buttons: Array<JSX.Element> = [];
@@ -41,28 +41,24 @@ export default function Main() {
 
   const handleOperator = (op: Operator): void => {
     dispatch(setOperator(op));
-    isNew = true;
+    setIsNew(true);
     // check if is a nested operation
     if (secondNum) {
       // if it is calculate the first result and reset the second number
       dispatch(calculateResult());
-      dispatch(setFirstNum(result));
-      dispatch(setSecondNum(null));
+      // TODO display result
     }
-    console.log(isNew);
   };
 
   const handleNumber = (num: number): void => {
-    console.log(isNew);
-    displayNum !== '0' || !isNew
-      ? setDisplayNum(displayNum + num.toString())
-      : setDisplayNum(num.toString());
-    if (!operator) {
-      dispatch(setFirstNum(parseFloat(displayNum)));
+    if (displayNum !== '0' && !isNew) {
+      setDisplayNum(displayNum + num.toString());
+      dispatch(setNumber(parseFloat(displayNum + num.toString())));
     } else {
-      dispatch(setSecondNum(parseFloat(displayNum)));
+      setDisplayNum(num.toString());
+      dispatch(setNumber(num));
     }
-    isNew = false;
+    setIsNew(false);
   };
 
   return (
