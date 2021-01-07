@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-// @ts-ignore
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { calculatorSelector } from '../app/selectors';
 import CalculatorButton from '../components/CalculatorButton';
-import { FONTSIZE, MARGIN } from '../theme';
-import { RootType } from '../app/store';
 import {
   calculateResult,
   resetState,
-  setFirstNum,
-  setOperator,
-  setSecondNum,
   setNumber,
+  setOperator,
 } from '../features/calculatorSlice';
 import { Operator } from '../model/operator';
+import { FONTSIZE, MARGIN } from '../theme';
 
 export default function Main() {
   const [displayNum, setDisplayNum] = useState('0');
   const [isNew, setIsNew] = useState(false);
   const dispatch = useDispatch();
-  const { operator, secondNum, result } = useSelector(
-    (state: RootType) => state.calculator,
-  );
+  const { secondNum, result } = useSelector(calculatorSelector);
 
   const createButtonRange = (min: number, max: number): Array<JSX.Element> => {
     const buttons: Array<JSX.Element> = [];
@@ -40,14 +35,11 @@ export default function Main() {
   };
 
   const handleOperator = (op: Operator): void => {
+    if (secondNum) {
+      dispatch(calculateResult());
+    }
     dispatch(setOperator(op));
     setIsNew(true);
-    // check if is a nested operation
-    if (secondNum) {
-      // if it is calculate the first result and reset the second number
-      dispatch(calculateResult());
-      // TODO display result
-    }
   };
 
   const handleNumber = (num: number): void => {
@@ -61,8 +53,14 @@ export default function Main() {
     setIsNew(false);
   };
 
+  useEffect(() => {
+    if (result) {
+      setDisplayNum(result.toString());
+    }
+  }, [result]);
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.displayNumStyle}>{displayNum}</Text>
       <View style={styles.row}>
         <CalculatorButton
@@ -81,9 +79,7 @@ export default function Main() {
         <CalculatorButton
           value="/"
           onClick={() => {
-            displayNum !== '0'
-              ? handleOperator(Operator.DIVIDE)
-              : setDisplayNum('Errore');
+            handleOperator(Operator.DIVIDE);
           }}
         />
       </View>
@@ -114,7 +110,18 @@ export default function Main() {
           }}
         />
       </View>
-    </View>
+      <View style={styles.row}>
+        {createButtonRange(0, 0)}
+        <CalculatorButton
+          value="="
+          onClick={() => {
+            dispatch(calculateResult());
+            dispatch(setOperator(null));
+            setIsNew(true);
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 

@@ -16,7 +16,7 @@ const calculatorSlice = createSlice({
     setFirstNum(state, action: PayloadAction<number>) {
       state.firstNum = action.payload;
     },
-    setOperator(state, action: PayloadAction<Operator>) {
+    setOperator(state, action: PayloadAction<Operator | null>) {
       state.operator = action.payload;
     },
     setSecondNum(state, action: PayloadAction<number | null>) {
@@ -37,7 +37,7 @@ const calculatorSlice = createSlice({
       state.firstNum = null;
       state.secondNum = null;
       state.operator = null;
-      state.result = null;
+      // state.result = null;
     },
     setNumber(state, action: PayloadAction<number>) {
       !state.operator
@@ -61,7 +61,8 @@ const getResult = (
       return firstNum * secondNum;
     case Operator.DIVIDE:
       if (secondNum === 0) {
-        return 0;
+        // TODO fix exception
+        throw new Error('division error');
       }
       return firstNum / secondNum;
     default:
