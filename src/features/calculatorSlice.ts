@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Dispatch } from 'react';
+import { RootType } from '../app/store';
 import { CalculatorState } from '../model/calculatorState';
 import { Operator } from '../model/operator';
 
@@ -7,6 +9,7 @@ const initialState: CalculatorState = {
   operator: null,
   secondNum: null,
   result: null,
+  error: null,
 };
 
 const calculatorSlice = createSlice({
@@ -22,30 +25,45 @@ const calculatorSlice = createSlice({
     setSecondNum(state, action: PayloadAction<number | null>) {
       state.secondNum = action.payload;
     },
-    calculateResult(state) {
-      if (state.firstNum && state.secondNum && state.operator) {
-        state.result = getResult(
-          state.firstNum,
-          state.secondNum,
-          state.operator,
-        );
-        state.firstNum = state.result;
-        state.secondNum = null;
-      }
+    setResult(state, action: PayloadAction<number>) {
+      state.result = action.payload;
     },
     resetState(state) {
       state.firstNum = null;
       state.secondNum = null;
       state.operator = null;
-      // state.result = null;
+      state.error = null;
     },
     setNumber(state, action: PayloadAction<number>) {
       !state.operator
         ? (state.firstNum = action.payload)
         : (state.secondNum = action.payload);
     },
+    setError(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+    },
   },
 });
+
+export const calculateResult = () => {
+  return (dispatch: Dispatch<any>, getState: () => RootType) => {
+    const { calculator }: { calculator: CalculatorState } = getState();
+    if (calculator.firstNum && calculator.operator && calculator.secondNum) {
+      try {
+        const result = getResult(
+          calculator.firstNum,
+          calculator.secondNum,
+          calculator.operator,
+        );
+        dispatch(setResult(result));
+        dispatch(setFirstNum(result));
+        dispatch(setSecondNum(null));
+      } catch (err) {
+        dispatch(setError('Errore'));
+      }
+    }
+  };
+};
 
 const getResult = (
   firstNum: number,
@@ -62,7 +80,7 @@ const getResult = (
     case Operator.DIVIDE:
       if (secondNum === 0) {
         // TODO fix exception
-        throw new Error('division error');
+        throw new Error('Errore');
       }
       return firstNum / secondNum;
     default:
@@ -74,9 +92,10 @@ export const {
   setFirstNum,
   setSecondNum,
   setOperator,
-  calculateResult,
+  setResult,
   resetState,
   setNumber,
+  setError,
 } = calculatorSlice.actions;
 
 export default calculatorSlice.reducer;

@@ -5,4 +5,5 @@ export interface CalculatorState {
   operator: Operator | null;
   secondNum: number | null;
   result: number | null;
+  error: string | null;
 }
