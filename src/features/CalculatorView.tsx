@@ -11,6 +11,8 @@ type Props = {
   handleOperator: (op: Operator) => void;
   handleNumber: (number: number) => void;
   handleEqual: () => void;
+  changeSignHandler: () => void;
+  handleComma: () => void;
 };
 
 const CalculatorView: React.FC<Props> = ({
@@ -20,6 +22,8 @@ const CalculatorView: React.FC<Props> = ({
   handleOperator,
   handleNumber,
   handleEqual,
+  changeSignHandler,
+  handleComma,
 }) => {
   const createButtonRange = (min: number, max: number): Array<JSX.Element> => {
     const buttons: Array<JSX.Element> = [];
@@ -43,6 +47,7 @@ const CalculatorView: React.FC<Props> = ({
       <View style={styles.row}>
         <CalculatorButton value="AC" onClick={cancelAllHandler} />
         <CalculatorButton value="C" onClick={cancelHandler} />
+        <CalculatorButton value="+/-" onClick={changeSignHandler} />
         <CalculatorButton
           value="/"
           onClick={() => {
@@ -79,6 +84,7 @@ const CalculatorView: React.FC<Props> = ({
       </View>
       <View style={styles.row}>
         {createButtonRange(0, 0)}
+        <CalculatorButton value="," onClick={handleComma} />
         <CalculatorButton value="=" onClick={handleEqual} />
       </View>
     </>

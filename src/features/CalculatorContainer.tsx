@@ -50,6 +50,18 @@ export default function CalculatorContainer() {
     setIsNew(true);
   };
 
+  const changeSignHandler = () => {
+    const num = parseFloat(displayNum) * -1;
+    setDisplayNum(num.toString());
+    dispatch(setNumber(num));
+  };
+
+  const handleComma = () => {
+    if (!displayNum.includes(',')) {
+      setDisplayNum(displayNum + '.');
+    }
+  };
+
   useEffect(() => {
     if (result) {
       setDisplayNum(result.toString());
@@ -67,6 +79,8 @@ export default function CalculatorContainer() {
       handleEqual={handleEqual}
       handleNumber={handleNumber}
       handleOperator={handleOperator}
+      changeSignHandler={changeSignHandler}
+      handleComma={handleComma}
     />
   );
 }
