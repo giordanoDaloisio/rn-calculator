@@ -27,6 +27,7 @@ const calculatorSlice = createSlice({
     },
     setResult(state, action: PayloadAction<number>) {
       state.result = action.payload;
+      state.error = null;
     },
     resetState(state) {
       state.firstNum = null;
@@ -48,7 +49,11 @@ const calculatorSlice = createSlice({
 export const calculateResult = () => {
   return (dispatch: Dispatch<any>, getState: () => RootType) => {
     const { calculator }: { calculator: CalculatorState } = getState();
-    if (calculator.firstNum && calculator.operator && calculator.secondNum) {
+    if (
+      calculator.firstNum !== null &&
+      calculator.operator !== null &&
+      calculator.secondNum !== null
+    ) {
       try {
         const result = getResult(
           calculator.firstNum,
