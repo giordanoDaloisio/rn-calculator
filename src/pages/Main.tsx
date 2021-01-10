@@ -12,9 +12,8 @@ export default function Main() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
     margin: 10,
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
 });

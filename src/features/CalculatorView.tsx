@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import CalculatorButton from '../components/CalculatorButton';
+import CalculatorTextView from '../components/CalculatorTextView';
 import { Operator } from '../model/operator';
-import { FONTSIZE, MARGIN } from '../theme';
 
 type Props = {
   displayNum: string;
@@ -43,7 +43,7 @@ const CalculatorView: React.FC<Props> = ({
 
   return (
     <>
-      <Text style={styles.displayNumStyle}>{displayNum}</Text>
+      <CalculatorTextView displayNum={displayNum} />
       <View style={styles.row}>
         <CalculatorButton value="AC" onClick={cancelAllHandler} />
         <CalculatorButton value="C" onClick={cancelHandler} />
@@ -94,11 +94,7 @@ const CalculatorView: React.FC<Props> = ({
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  displayNumStyle: {
-    fontSize: FONTSIZE,
-    margin: MARGIN,
+    justifyContent: 'space-between',
   },
 });
 

@@ -9,16 +9,27 @@
  */
 
 import React from 'react';
-import {Provider} from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
 import Main from '../pages/Main';
+import { BACKGROUND_COLOR } from '../theme';
 import store from './store';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Main />
+      <View style={styles.background}>
+        <Main />
+      </View>
     </Provider>
   );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+  },
+});

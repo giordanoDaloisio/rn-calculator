@@ -84,7 +84,6 @@ const getResult = (
       return firstNum * secondNum;
     case Operator.DIVIDE:
       if (secondNum === 0) {
-        // TODO fix exception
         throw new Error('Errore');
       }
       return firstNum / secondNum;
