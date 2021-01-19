@@ -11,15 +11,15 @@ export enum ButtonType {
 type ButtonProps = {
   value: string;
   onClick: () => void;
-  type?: ButtonType;
+  type: ButtonType;
 };
 
 const CalculatorButton: React.FC<ButtonProps> = ({ value, onClick, type }) => {
   return (
     <TouchableOpacity
       onPress={onClick}
-      style={[styles.buttonStyle, styles.number]}>
-      <Text style={[styles.buttonText, styles.numberFont]}>{value}</Text>
+      style={[styles.buttonStyle, styles[type]]}>
+      <Text style={[styles.buttonText, styles[type + 'Font']]}>{value}</Text>
     </TouchableOpacity>
   );
 };
@@ -29,7 +29,10 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: MARGIN,
     alignContent: 'center',
+    justifyContent: 'center',
     borderRadius: 100,
+    width: 60,
+    height: 60,
   },
   buttonText: {
     fontSize: FONTSIZE,
@@ -42,6 +45,18 @@ const styles = StyleSheet.create({
   },
   numberFont: {
     color: 'white',
+  },
+  operation: {
+    backgroundColor: '#FFC125',
+  },
+  operationFont: {
+    color: 'white',
+  },
+  other: {
+    backgroundColor: '#D6D6D6',
+  },
+  otherFont: {
+    color: 'black',
   },
 });
 

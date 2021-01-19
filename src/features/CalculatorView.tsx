@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import CalculatorButton from '../components/CalculatorButton';
+import CalculatorButton, { ButtonType } from '../components/CalculatorButton';
 import CalculatorTextView from '../components/CalculatorTextView';
 import { Operator } from '../model/operator';
 
@@ -35,6 +35,7 @@ const CalculatorView: React.FC<Props> = ({
             handleNumber(index);
           }}
           key={index}
+          type={ButtonType.NUMBER}
         />,
       );
     }
@@ -45,14 +46,27 @@ const CalculatorView: React.FC<Props> = ({
     <>
       <CalculatorTextView displayNum={displayNum} />
       <View style={styles.row}>
-        <CalculatorButton value="AC" onClick={cancelAllHandler} />
-        <CalculatorButton value="C" onClick={cancelHandler} />
-        <CalculatorButton value="+/-" onClick={changeSignHandler} />
+        <CalculatorButton
+          value="AC"
+          onClick={cancelAllHandler}
+          type={ButtonType.OTHER}
+        />
+        <CalculatorButton
+          value="C"
+          onClick={cancelHandler}
+          type={ButtonType.OTHER}
+        />
+        <CalculatorButton
+          value="+/-"
+          onClick={changeSignHandler}
+          type={ButtonType.OTHER}
+        />
         <CalculatorButton
           value="/"
           onClick={() => {
             handleOperator(Operator.DIVIDE);
           }}
+          type={ButtonType.OPERATION}
         />
       </View>
       <View style={styles.row}>
@@ -62,6 +76,7 @@ const CalculatorView: React.FC<Props> = ({
           onClick={() => {
             handleOperator(Operator.PLUS);
           }}
+          type={ButtonType.OPERATION}
         />
       </View>
       <View style={styles.row}>
@@ -71,6 +86,7 @@ const CalculatorView: React.FC<Props> = ({
           onClick={() => {
             handleOperator(Operator.MINUS);
           }}
+          type={ButtonType.OPERATION}
         />
       </View>
       <View style={styles.row}>
@@ -80,12 +96,21 @@ const CalculatorView: React.FC<Props> = ({
           onClick={() => {
             handleOperator(Operator.FOR);
           }}
+          type={ButtonType.OPERATION}
         />
       </View>
       <View style={styles.row}>
         {createButtonRange(0, 0)}
-        <CalculatorButton value="," onClick={handleComma} />
-        <CalculatorButton value="=" onClick={handleEqual} />
+        <CalculatorButton
+          value=","
+          onClick={handleComma}
+          type={ButtonType.NUMBER}
+        />
+        <CalculatorButton
+          value="="
+          onClick={handleEqual}
+          type={ButtonType.OPERATION}
+        />
       </View>
     </>
   );
