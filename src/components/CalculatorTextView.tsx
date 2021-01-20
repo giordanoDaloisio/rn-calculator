@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { FONTSIZE, MARGIN, FONT_COLOR } from '../theme';
+import { FONT_COLOR, MARGIN } from '../theme';
 
 interface Props {
   displayNum: string;
@@ -16,14 +16,12 @@ const CalculatorTextView: React.FC<Props> = ({ displayNum }) => {
 
 const styles = StyleSheet.create({
   displayNumStyle: {
-    fontSize: FONTSIZE,
-    margin: MARGIN,
+    fontSize: 60,
+    margin: MARGIN + 10,
     color: FONT_COLOR,
   },
   container: {
     alignItems: 'flex-end',
-    // borderWidth: 1,
-    // borderColor: 'white',
   },
 });
 

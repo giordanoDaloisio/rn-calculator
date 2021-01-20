@@ -100,7 +100,14 @@ const CalculatorView: React.FC<Props> = ({
         />
       </View>
       <View style={styles.row}>
-        {createButtonRange(0, 0)}
+        <CalculatorButton
+          value="0"
+          onClick={() => {
+            handleNumber(0);
+          }}
+          type={ButtonType.NUMBER}
+          doubleSize
+        />
         <CalculatorButton
           value=","
           onClick={handleComma}

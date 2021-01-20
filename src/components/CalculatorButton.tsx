@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { FONTSIZE, FONT_COLOR, MARGIN } from '../theme';
+import { FONTSIZE, FONT_COLOR, HEIGHT, MARGIN, WIDTH } from '../theme';
 
 export enum ButtonType {
   NUMBER = 'number',
@@ -12,13 +12,20 @@ type ButtonProps = {
   value: string;
   onClick: () => void;
   type: ButtonType;
+  doubleSize?: boolean;
 };
 
-const CalculatorButton: React.FC<ButtonProps> = ({ value, onClick, type }) => {
+const CalculatorButton: React.FC<ButtonProps> = ({
+  value,
+  onClick,
+  type,
+  doubleSize,
+}) => {
+  const buttonStyle = [styles.buttonStyle, styles[type]];
+  doubleSize ? buttonStyle.push(styles.doubleSize) : buttonStyle;
+
   return (
-    <TouchableOpacity
-      onPress={onClick}
-      style={[styles.buttonStyle, styles[type]]}>
+    <TouchableOpacity onPress={onClick} style={buttonStyle}>
       <Text style={[styles.buttonText, styles[type + 'Font']]}>{value}</Text>
     </TouchableOpacity>
   );
@@ -28,17 +35,18 @@ const styles = StyleSheet.create({
   buttonStyle: {
     padding: 10,
     margin: MARGIN,
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 100,
-    width: 60,
-    height: 60,
+    width: WIDTH,
+    height: HEIGHT,
   },
   buttonText: {
     fontSize: FONTSIZE,
     fontWeight: '300',
     color: FONT_COLOR,
     textAlign: 'center',
+    fontFamily: 'Helvetica',
   },
   number: {
     backgroundColor: '#474747',
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   operation: {
-    backgroundColor: '#FFC125',
+    backgroundColor: '#f39200',
   },
   operationFont: {
     color: 'white',
@@ -57,6 +65,12 @@ const styles = StyleSheet.create({
   },
   otherFont: {
     color: 'black',
+  },
+  doubleSize: {
+    width: WIDTH * 2,
+    alignItems: 'flex-start',
+    borderColor: 'white',
+    paddingLeft: 20,
   },
 });
 

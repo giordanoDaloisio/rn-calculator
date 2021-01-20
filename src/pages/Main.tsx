@@ -13,7 +13,8 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'stretch',
+    flex: 1,
   },
 });
