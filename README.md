@@ -2,9 +2,9 @@
 
 An iOS calculator clone made with [React Native](https://reactnative.dev/) + [Typescript](https://reactnative.dev/docs/typescript) + [Redux](https://redux.js.org/) for state management.
 
-<img src="https://github.com/giordanoDaloisio/rn-calculator/blob/master/screenshots/Screenshot_1611509791.png" width="40%" alt="First Screen"/>
+<img src="https://github.com/giordanoDaloisio/rn-calculator/blob/master/screenshots/Screenshot_1611509791.png" width="30%" alt="First Screen"/>
 
-<img src="https://github.com/giordanoDaloisio/rn-calculator/blob/master/screenshots/Screenshot_1611509830.png" width="40%" alt="Second Screen"/>
+<img src="https://github.com/giordanoDaloisio/rn-calculator/blob/master/screenshots/Screenshot_1611509830.png" width="30%" alt="Second Screen"/>
 
 ## Contributing
 
@@ -13,17 +13,17 @@ To contribute to this project follow these steps:
 1. Make sure to have React Native Cli and the iOS and Android environments properly installed (https://reactnative.dev/docs/environment-setup)
 2. Run one of these commands to install all the required dependencies:
 
-   if you like to use npm run: `npm install`
+   - If you like to use npm run: `npm install`
 
-   if you like to use yarn run: `yarn install`
+   - If you like to use yarn run: `yarn install`
 
 3. To run the application execute these commands:
 
-   `npx react-native start`
+   - Start the React Native bundler: `npx react-native start`
 
-   For Android: `npx react-native run-android`
+   - For Android: `npx react-native run-android`
 
-   For iOS: `npx react-native run-ios`
+   - For iOS: `npx react-native run-ios`
 
 ## Disclaimer
 
