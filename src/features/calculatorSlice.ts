@@ -34,6 +34,7 @@ const calculatorSlice = createSlice({
       state.secondNum = null;
       state.operator = null;
       state.error = null;
+      state.result = null;
     },
     setNumber(state, action: PayloadAction<number>) {
       !state.operator

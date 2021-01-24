@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import Main from '../pages/Main';
 import { BACKGROUND_COLOR } from '../theme';
@@ -18,6 +18,7 @@ import store from './store';
 const App = () => {
   return (
     <Provider store={store}>
+      <StatusBar backgroundColor="black" />
       <View style={styles.background}>
         <Main />
       </View>

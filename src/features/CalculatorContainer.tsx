@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculatorSelector } from '../app/selectors';
 import { Operator } from '../model/operator';
+import { DISPLAY_FONT_SIZE } from '../theme';
 import {
   calculateResult,
   resetState,
@@ -12,6 +13,7 @@ import CalculatorView from './CalculatorView';
 
 export default function CalculatorContainer() {
   const [displayNum, setDisplayNum] = useState('0');
+  const [fontSize, setFontSize] = useState(DISPLAY_FONT_SIZE);
   const [isNew, setIsNew] = useState(false);
   const dispatch = useDispatch();
   const { secondNum, result, error } = useSelector(calculatorSelector);
@@ -26,8 +28,17 @@ export default function CalculatorContainer() {
 
   const handleNumber = (num: number): void => {
     if (displayNum !== '0' && !isNew) {
-      setDisplayNum(displayNum + num.toString());
-      dispatch(setNumber(parseFloat(displayNum + num.toString())));
+      if (displayNum.length < 9) {
+        const newNum = displayNum + num.toString();
+        // reduce font size if the number is high
+        if (newNum.length >= 6) {
+          setFontSize(fontSize - 2);
+        } else {
+          setFontSize(DISPLAY_FONT_SIZE);
+        }
+        setDisplayNum(newNum);
+        dispatch(setNumber(parseFloat(newNum)));
+      }
     } else {
       setDisplayNum(num.toString());
       dispatch(setNumber(num));
@@ -36,11 +47,13 @@ export default function CalculatorContainer() {
   };
 
   const cancelAllHandler = () => {
+    setFontSize(DISPLAY_FONT_SIZE);
     setDisplayNum('0');
     dispatch(resetState());
   };
 
   const calcelHandler = () => {
+    setFontSize(DISPLAY_FONT_SIZE);
     setDisplayNum('0');
   };
 
@@ -81,6 +94,7 @@ export default function CalculatorContainer() {
       handleOperator={handleOperator}
       changeSignHandler={changeSignHandler}
       handleComma={handleComma}
+      fontSize={fontSize}
     />
   );
 }
